@@ -292,27 +292,43 @@ body {
     width: 246px;  Задаёт ширину ссылкам в навигационном меню 
 } */
 
-.content-text {
+.content-block {
+    width: 320px;
+}
+
+.preview-content-text {
     display: block;
+    overflow: hidden;
     width: 288px;
-    height: 90px;
+    /* height: 90px; */
     margin-top: 24px;
     margin-left: 16px;
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+    /* Высота одной строки текста — 18px */
     letter-spacing: 0.2px;
+    transition: max-height 0.3s ease-in-out;
+    /* ease-in-out; интересно то, что даёт задержку при сворачивании причём самому триггеру, а не тексту */
+    /* Плавность при изменении высоты */
+    max-height: 90px;
+    /* НА мобильном 5 строк * 18px = 90px */
 }
 
-.read-more {
+.read-more-trigger {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    list-style: none;
+    /* Прячем дефолтную стрелочку */
+    user-select: none;
+    /* Запрещаем случайное выделение текста при клике */
     /* gap: 8px; */
     white-space: nowrap;
     width: 132px;
     height: 24px;
     margin-top: 16px;
-    margin-left: 16px;
+    /* margin-left: 16px; */
     text-decoration: none;
     color: #1B1C21;
     font-weight: 500;
@@ -323,7 +339,7 @@ body {
     /* transition не наследуется. Если прописал плавность только для родителя (.read-more), то плавно будет двигаться только сама кнопка. Псевдоэлементы (::before и ::after) — это, хоть и «дети» ссылки, но технически отдельные элементы. Чтобы стрелочка или галочки не «дергались», им нужно прописать transition персонально. Это случается по одной простой причине: если задал transform: translateX(5px) самой ссылке (.read-more, .read-more:hover), то двигается весь контейнер целиком вместе со всем содержимым (текстом и обеими иконками). В этом случае псевдоэлементам даже не нужен свой transition, потому что они — как пассажиры в автобусе: автобус плавно поехал, и они едут вместе с ним. Но вот когда это сломается:Если решишь добавить дополнительное движение только для стрелочки (например, чтобы она отпрыгивала чуть дальше текста), вот тогда она начнет «телепортироваться», и придется добавить ей персональный transition. Если хочешь, чтобы «пассажир» не просто ехал в автобусе, а еще и сам внутри него танцевал, ему нужны свои инструкции. Раз стрелка начала «телепортироваться», просто добавь ей её собственный transition. Теперь, когда понимаешь механику, код станет по-настоящему профессиональным. */
 }
 
-.read-more::before {
+.read-more-trigger::before {
     content: '';
     display: inline-block;
     flex-shrink: 0;
@@ -340,13 +356,13 @@ body {
     /* Это свойство отвечает за выравнивание. Что делает: Значение "center" ставит картинку ровно по центру выделенной области. Эффект: Если область для иконки чуть шире или выше самой картинки, она не прижмется к углу, а будет стоять аккуратно посередине. */
 }
 
-.read-more:hover {
+.read-more-trigger:hover {
     /* Двигается ВСЁ. Когда вешаешь transform прямо на ссылку, при наведении смещается вся кнопка целиком: и галочки (::before), и текст, и стрелочка (::after), если она есть. Визуальный эффект: Кнопка как бы «плывет» в сторону. */
     opacity: 0.8;
     transform: translateX(5px) translateY(5px);
 }
 
-.read-more:hover::before {
+.read-more-trigger:hover::before {
     /* Двигается только ХВОСТ. Здесь даешь команду: «Когда я навожу на кнопку, найди её псевдоэлемент (стрелочку) и сдвинь только его». Визуальный эффект: Сама кнопка и текст стоят на месте, а стрелочка в конце делает милое движение «прыжок» вправо. Это выглядит более тонко и профессионально. */
     transform: scale(1.5);
     /* Увеличивает псевдоэлемент иконку */
@@ -354,15 +370,88 @@ body {
     transition: all 0.3s ease;
 }
 
+.read-more-container {
+    /* display: block;
+    overflow: hidden; */
+    width: 288px;
+    background-color: #F8F8F8;
+    margin-left: 16px;
+    /* Делаем дополнительный отступ раскрывающемуся тексту 16px */
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    animation: slideDown 0.4s ease-out;
+    /* Анимация плавного выпадения */
+}
+
+.read-more-container[open] .preview-content-text {
+    animation: slideDown 0.4s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Когда details ОТКРЫВАЕТСЯ, мы прячем оригинальный текст "Читать дальше" */
+.read-more-container[open] .read-more-trigger-text {
+    display: none;
+}
+
+/* И на его место через псевдоэлемент ::after вставляем слово "Свернуть" */
+.read-more-container[open] .read-more-trigger::after {
+    content: 'Свернуть ↓';
+    /* Меняем стрелку на "вниз" и пишем новое слово */
+    transform: none !important;
+    /* Сбрасываем ховер-сдвиг, почему-то не работает */
+}
+
+.read-more-container[open] .read-more-trigger::before {
+    content: '↓';
+    /* Когда details открывается, добавляем (меняем) стрелочку на "вниз" перед триггером */
+    transform: none;
+}
+
+/* На всякий случай точечно отключаем сдвиг при наведении на ОТКРЫТУЮ кнопку */
+.read-more-container[open] .read-more-trigger:hover::after {
+    transform: translateY(2px);
+    /* Вместо сдвига вправо можно сделать легкое милое покачивание вниз на 2px, почему-то тоже не работатет */
+}
+
+/* Находим анонс через :has() и полностью убираем лимит высоты, раскрывая его */
+.content-block:has(.read-more-container[open]) .preview-content-text {
+    max-height: 2000px;
+    /* Задаем заведомо большую высоту для полного раскрытия */
+}
+
 .stand-cps {
-    width: 320px;
-    height: 176px;
+    /* width: 320px;
+    height: 176px; */
     margin-top: 16px;
+}
+
+.preview-content-text p {
+    margin-bottom: 18px;
+    /* Делаем нижний отступ СТРОГО равным высоте одной строки 18px (line-height: 18px;) */
+    text-indent: 20px;
+    /* Делаем отступ (красную строку). Сдвиг первой строки каждого абзаца на 20px */
+}
+
+.preview-content-text p:last-child {
+    margin-bottom: 0;
+    /* Убираем отступ у самого последнего абзаца, чтобы он не добавлял лишний хвост снизу */
 }
 
 @media (min-width: 768px) {
     body {
-        display: grid;
         grid-template: 88px 416px / 768px;
     }
 
@@ -376,23 +465,204 @@ body {
     }
 
     .group {
-    margin-right: auto;
+        margin-right: auto;
+    }
+
+    .profile,
+    .chat,
+    .call {
+        display: inline-flex;
+    }
+
+    .checkstatus {
+        margin-right: 24px;
+    }
+
+    .repair {
+        /* margin-right: 16px; */
+    }
+
+    .nav-wrapper {
+        margin-top: 32px;
+        margin-left: 24px;
+    }
+
+    .title {
+        width: 257px;
+        padding-left: 24px;
+    }
+
+    .content {
+        display: inline-flex;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+    }
+
+    .preview-content-text,
+    .read-more-container {
+        width: 312px;
+        line-height: 20px;
+        margin-top: 32px;
+        margin-left: 24px;
+    }
+
+    .content-block:not(.content-block:has(.read-more-container[open])) .preview-content-text {
+        max-height: 160px;
+    }
+
+    .stand-cps {
+        margin-top: 32px;
+        margin-left: 48px;
+    }
+
 }
 
-.profile, .chat, .call {
-    display: inline-flex;
-}
+@media (min-width: 1120px) {
+    body {
+        grid-template: 0 535px / 1120px;
+        position: relative;
+        background: #F8F8F8;
+    }
 
-.checkstatus {
-    margin-right: 24px;
-}
+    .header {
+        position: relative;
+        background: transparent;
+        padding: 0;
+        height: 0;
+    }
 
-.repair {
-    /* margin-right: 16px; */
-}
+    .title {
+        width: 266px;
+        padding-left: 33px;
+        margin-top: 42px;
+    }
 
-.content {
-    display: inline-flex;
-}
-    
+    .title::before {
+        top: 42px;
+        width: 3px;
+        border-radius: 2px 2px 2px 2px;
+    }
+
+    .burger,
+    .group,
+    .profile,
+    .chat,
+    .call,
+    .divider-1,
+    .divider-2 {
+        display: none;
+    }
+
+    .repair {
+        position: absolute;
+        display: inline-flex;
+        margin-top: 42px;
+        margin-left: 849px;
+    }
+
+    .repair::before {
+        content: 'Оставить заявку';
+        position: absolute;
+        /* Вырываем из потока верстки. ТЕКСТ: Делаем его "призраком", который не толкает кнопку */
+        /* display: inline-block; */
+        right: 100%;
+        /* ЕСЛИ ТЕКСТ ДОЛЖЕН БЫТЬ СЛЕВА ОТ КНОПКИ: Встает ровно у левой границы кнопки */
+        margin-right: 8px;
+        /* Зазор между текстом и кнопкой. Или можно добавить в свойство right: 125%; значение и убрать margin-right: 8px; - тоже будет зазор */
+        flex-shrink: 0;
+        white-space: nowrap;
+        width: 125px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.2px;
+    }
+
+    .checkstatus {
+        position: absolute;
+        display: inline-flex;
+        margin-top: 42px;
+        margin-left: 1049px;
+    }
+
+    .checkstatus::before {
+        content: 'Статус ремонта';
+        position: absolute;
+        /* display: inline-block; */
+        right: 100%;
+        margin-right: 9px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        width: 119px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.2px;
+    }
+
+    .nav-wrapper {
+        position: relative;
+        /* align-items: center;
+        justify-content: stretch; */
+        /* overflow: visible; */
+        width: 1063px;
+        height: 82px;
+        margin-top: 8px;
+        margin-left: 33px;
+    }
+
+    .nav-wrapper::after {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .button-2-2 {
+        order: 0;
+    }
+
+    .button-2-1 {
+        display: none;
+    }
+
+    .content {
+        display: inline-flex;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+
+    }
+
+    .content-block {
+        width: 514px;
+    }
+
+    .preview-content-text,
+    .read-more-container {
+        width: 490px;
+        /* line-height: 20px; */
+        margin-top: 32px;
+        margin-left: 24px;
+    }
+
+    .content-block:not(.content-block:has(.read-more-container[open])) .preview-content-text {
+        max-height: 160px;
+    }
+
+    .stand-cps {
+
+        margin-top: 7px;
+        margin-left: 36px;
+        /* width: 532;
+        height: 307; */
+    }
+
+
 }
