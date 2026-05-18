@@ -36,17 +36,20 @@
 }
 
 body {
-    display: grid;
-    grid-template: 88px 509px / 320px;
+    display: flex;
+    flex-direction: column;
+    /* display: grid;
+    grid-template: 88px 509px / 320px; */
     margin: 0;
     font-family: 'TT Lakes', sans-serif;
     font-size: 16px;
-    /* max-width: 320px; */
+    width: 320px;
 }
 
 .header {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    height: 87px;
     box-sizing: border-box;
     border-bottom: 1px solid #D9FFF5;
 }
@@ -56,7 +59,7 @@ body {
     /* height: 509px; */
 }
 
-.burger {
+.burger, .checkstatus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -101,7 +104,7 @@ body {
     border-radius: 1px;
 }
 
-.profile {
+.profile, .chat, .call {
     display: none;
     align-items: center;
     justify-content: center;
@@ -114,7 +117,7 @@ body {
     border: 0.5px solid rgba(0, 0, 0, 0);
 }
 
-.chat {
+/* .chat {
     display: none;
     align-items: center;
     justify-content: center;
@@ -125,9 +128,9 @@ body {
     margin-left: 16px;
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
-}
+} */
 
-.call {
+/* .call {
     display: none;
     align-items: center;
     justify-content: center;
@@ -138,7 +141,7 @@ body {
     margin-left: 16px;
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
-}
+} */
 
 .repair {
     display: inline-flex;
@@ -153,17 +156,18 @@ body {
     border: 0.5px solid rgba(0, 0, 0, 0);
 }
 
-.checkstatus {
+/* .checkstatus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
+    box-sizing: border-box;
     margin-top: 24px;
     margin-left: 16px;
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
-}
+} */
 
 .title {
     width: 304px;
@@ -234,7 +238,7 @@ body {
     overflow-x: auto;
     /* Включает прокрутку пальцем/тачпадом */
     white-space: nowrap;
-    /* Все в одну линию, запрет на перенос строки */
+    /* Все в одну линию, запрет на перенос строки. Если мы хотим разрешить тексту и блокам переноситься на новые строки, то используем white-space: normal; — стирает мобильный запрет nowrap. Теперь текст внутри кнопок или сами блоки могут спокойно перепрыгивать на следующую строку, как только дойдут до правого края контейнера. */
     list-style: none;
     /* Убираем маркеры (можно поменять маркеры на свои с помощью list-style-type: "🚀") */
     scrollbar-width: none;
@@ -246,7 +250,7 @@ body {
     align-items: center;
     justify-content: center;
     /* height: 40px; */
-    /* flex-shrink: 0; Чтобы ширина не сжималась */
+    /* flex-shrink: 0; Чтобы ширина не сжималась. Чтобы разрешить элементам сжиматься или адаптироваться например под ПК сетку используем flex-shrink: 1; flex-shrink: 0; — Элемент вообще не сжимается. Он сохраняет свои жесткие размеры, даже если из-за этого появится горизонтальная прокрутка страницы.flex-shrink: 1; — Стандартное значение по умолчанию. Все элементы сжимаются равномерно и одинаково, пытаясь уместиться в строку. flex-shrink: 2; (и больше) — Элемент будет сжиматься в два раза быстрее и сильнее, чем его сосед с flex-shrink: 1; Оно задает не просто запрет или разрешение на сжатие, а определяет коэффициент (пропорцию) сжатия элементов относительно друг друга, если им не хватает места в контейнере. Число в flex-shrink — это степень «уступчивости» элемента. Чем больше цифра, тем сильнее элемент сжимается и уступает место своим соседям по строке. Отрицательные значения (например, -1) использовать нельзя. Есть противополжность — flex-grow (который отвечает за растягивание элементов на свободное место) */
     padding: 8px 15px;
     text-decoration: none;
     /* Ссылка выглядит как обычный текст, убираем стандартное визуальное оформление текста, которое браузер добавляет автоматически (чаще всего применяют к ссылкам <a>, убирает подчёркивание, убирает другие линии) Ещё можно использовать, чтобы сделать например волнистую красную линию под текстом: text-decoration: underline red wavy; или создать эффект зачёркнутой цены: text-decoration: line-through; */
@@ -261,9 +265,12 @@ body {
     /* Плавность изменений, all - указывает какие свойства будут анимироваться, в данном случае все: цвет текста, фон, ширина, прозрачность, рамка. 0.2s - как долго? Это длительнсть анимации. ease - с какой динамикой? Это временная функция, которая определяет характер движения (скорость в начале и конце): ease: (по умолчанию) — плавный старт, быстрое ускорение в середине и плавное замедление в конце. Выглядит наиболее естественно.linear: движение с одинаковой скоростью от начала до конца (выглядит немного механически).ease-in: медленный старт, резкий конец.ease-out: резкий старт, медленный конец. */
 }
 
-.nav-links a:hover {
+/* Эффект стилей при :hover всегда должен быть на первом элементе (по умолчанию), в данном лучае на элементе li (было на элементе a) */
+.nav-links li:hover {
     background-color: #FFFFFF;
-    border-color: #B8FFEC;
+    border: 2px solid #B8FFEC;
+    border-radius: 6px;
+    /* border-color: #B8FFEC; */
     color: #7E7E82;
 }
 
@@ -452,7 +459,8 @@ body {
 
 @media (min-width: 768px) {
     body {
-        grid-template: 88px 416px / 768px;
+        width: 768px;
+        /* grid-template: 88px 416px / 768px; */
     }
 
     .header {
@@ -521,7 +529,8 @@ body {
 
 @media (min-width: 1120px) {
     body {
-        grid-template: 0 535px / 1120px;
+        width: 1120px;
+        /* grid-template: 0 535px / 1120px; */
         position: relative;
         background: #F8F8F8;
     }
@@ -606,7 +615,7 @@ body {
         position: relative;
         /* align-items: center;
         justify-content: stretch; */
-        /* overflow: visible; */
+        overflow: visible; /* Отменяем скрытие. text-overflow и overflow больше ничего не прячут. overflow: visible; — сообщает браузеру: «Больше не нужно прятать контент, который вылезает за границы. Покажи его полностью». */
         width: 1063px;
         height: 82px;
         margin-top: 8px;
@@ -620,7 +629,7 @@ body {
     .nav-links {
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap;
+        flex-wrap: wrap; /* Говорим флексам: если элемент не влезает в ширину экрана — перенеси его вниз. flex-wrap: wrap; — ключевой инструмент для флекс-сеток. Если у нас в меню станет 15 кнопок, они не будут сжиматься в кашу и не создадут прокрутку, а красиво выстроятся в 2 или 3 ровных ряда. */
     }
 
     .button-2-2 {
@@ -648,7 +657,7 @@ body {
     .read-more-container {
         width: 490px;
         /* line-height: 20px; */
-        margin-top: 32px;
+        margin-top: 16.22px;
         margin-left: 24px;
     }
 
