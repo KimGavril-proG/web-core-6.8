@@ -10,18 +10,33 @@
 
 <body>
     <header class='header'>
-        <button class="burger"><img src="./images/burger.svg" alt="ic-burger"></button>
-        <div class="divider-1"></div>
-        <div class='group'><img src="./images/Group.svg" alt="CPS services"></div>
-        <button class="call"><img src="./images/call.svg" alt="ic-call"></button>
-        <button class="chat"><img src="./images/chat.svg" alt="ic-chat"></button>
-        <button class="profile"><img src="./images/profile.svg" alt="ic-profile"></button>
-        <div class="divider-2"></div>
-        <button class="repair"><img src="./images/repair.svg" alt="ic-repair"></button>
-        <button class="checkstatus"><img src="./images/checkstatus.svg" alt="ic-checkstatus"></button>
+        <form class="wrapper-left-side" action='' method=''>
+            <button class="burger"><img src="./images/burger.svg" alt="ic-burger"></button>
+            <div class="divider-1"></div>
+            <div class='group'><img src="./images/Group.svg" alt="CPS services"></div>
+        </form>
+        <form class="wrapper-right-side" action='' method=''>
+            <button class="call"><img src="./images/call.svg" alt="ic-call"></button>
+            <button class="chat"><img src="./images/chat.svg" alt="ic-chat"></button>
+            <button class="profile"><img src="./images/profile.svg" alt="ic-profile"></button>
+            <div class="divider-2"></div>
+            <button class="repair"><img src="./images/repair.svg" alt="ic-repair"></button>
+            <button class="checkstatus"><img src="./images/checkstatus.svg" alt="ic-checkstatus"></button>
+        </form>
     </header>
     <main class='main'>
-        <h2 class='title'>Услуги и сервисы</h2>
+        <form class="wrapper-title" action='' method=''>
+            <h2 class='title'>Услуги и сервисы</h2>
+            <div class="pc-buttons">
+                <label for="">
+                    Оставить заявку<button class="repair-2"><img src="./images/repair.svg" alt="ic-repair"></button>
+                </label>
+                <label for="">
+                    Статус ремонта<button class="checkstatus-2"><img src="./images/checkstatus.svg"
+                            alt="ic-checkstatus"></button>
+                </label>
+            </div>
+        </form>
         <nav class='nav-wrapper'>
             <ul class='nav-links'>
                 <li class="button-1"><a href="#">Ремонтируемые бренды</a></li>
@@ -64,11 +79,11 @@
                 </details>
             </div>
             <!-- <a href="#" class="read-more">Читать дальше</a> -->
-            <picture>
+            <picture class='stand-cps'>
                 <!-- ИДЕАЛЬНО ДЛЯ MIN-WIDTH (От меньшего к большему) При использовании min-width (подход Mobile-First) сортируем размеры по убыванию (от большего к меньшему ). При использовании max-width — по возрастанию. Если используем min-width, то первыми сверху должны идти самые БОЛЬШИЕ экраны (ПК), а в самом низу в <img> оставаться мобилка. Если используем max-width, то первыми сверху должны идти самые МАЛЕНЬКИЕ экраны (мобилки), а внизу — ПК. -->
                 <source media='(min-width: 1120px)' srcset='./images/stand-cps-1120w.png'>
                 <source media='(min-width: 768px)' srcset='./images/stand-cps-768w.png'>
-                <img class='stand-cps' src="./images/stand-cps.png" alt="Information stand CPS">
+                <img src="./images/stand-cps.png" alt="Information stand CPS">
             </picture>
         </article>
     </main>

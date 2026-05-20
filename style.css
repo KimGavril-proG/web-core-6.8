@@ -43,31 +43,43 @@ body {
     margin: 0;
     font-family: 'TT Lakes', sans-serif;
     font-size: 16px;
-    width: 320px;
+    /* width: 320px; */
 }
 
 .header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     height: 87px;
     box-sizing: border-box;
     border-bottom: 1px solid #D9FFF5;
 }
+
+.wrapper-left-side, .wrapper-right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px;
+}
+
+/* .wrapper-right-side {
+    display: flex;
+} */
 
 .main {
     background-color: #F8F8F8;
     /* height: 509px; */
 }
 
-.burger, .checkstatus {
+.burger, .checkstatus, .repair,  .repair-2, .checkstatus-2 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
     box-sizing: border-box;
-    margin-top: 24px;
-    margin-left: 16px;
+    /* margin-top: 24px;
+    margin-left: 16px; */
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
 }
@@ -82,23 +94,23 @@ body {
     width: 96.55px;
     height: 50.81px;
     box-sizing: border-box;
-    margin-top: 18.59px;
-    margin-left: 16.73px;
+    /* margin-top: 18.59px;
+    margin-left: 16.73px; */
     border: 0.5px solid white;
 }
 
 .divider-1 {
     display: none;
-    margin-top: 28px;
-    margin-left: 16.72px;
+    /* margin-top: 28px;
+    margin-left: 16.72px; */
     border-left: 2px solid #EAEAEA;
     height: 32px;
     border-radius: 1px;
 }
 
 .divider-2 {
-    margin-top: 28px;
-    margin-left: 16.72px;
+    /* margin-top: 28px;
+    margin-left: 16.72px; */
     border-left: 2px solid #EAEAEA;
     height: 32px;
     border-radius: 1px;
@@ -111,10 +123,14 @@ body {
     width: 40px;
     height: 40px;
     box-sizing: border-box;
-    margin-top: 24px;
-    margin-left: 16px;
+    /* margin-top: 24px;
+    margin-left: 16px; */
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
+}
+
+.pc-buttons {
+    display: none;
 }
 
 /* .chat {
@@ -143,7 +159,7 @@ body {
     border: 0.5px solid rgba(0, 0, 0, 0);
 } */
 
-.repair {
+/* .repair {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -154,7 +170,7 @@ body {
     margin-left: 20px;
     background-color: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0);
-}
+} */
 
 /* .checkstatus {
     display: inline-flex;
@@ -170,7 +186,7 @@ body {
 } */
 
 .title {
-    width: 304px;
+    /* width: 304px; */
     height: 40px;
     box-sizing: border-box;
     margin-top: 24px;
@@ -274,6 +290,11 @@ body {
     color: #7E7E82;
 }
 
+/* Задал рамку для элемента li так как эффект стилей при :hover всегда должен быть на первом элементе (по умолчанию). Если убрать рамку будет эффект отпрыгивания кнопки при наведении так как рамка у элемента li отсутствует и при наведении она появляется и даёт такой эффект */
+.nav-links li {
+    border: 2px solid transparent;
+}
+
 .nav-links a:focus {
     outline: none;
     /* Убираем рамку только при обычном фокусе (мышкой) с использованием Shift для прокрутки колёсиком */
@@ -299,14 +320,20 @@ body {
     width: 246px;  Задаёт ширину ссылкам в навигационном меню 
 } */
 
+.content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .content-block {
-    width: 320px;
+    /* width: 320px; */
 }
 
 .preview-content-text {
     display: block;
     overflow: hidden;
-    width: 288px;
+    /* width: 288px; */
     /* height: 90px; */
     margin-top: 24px;
     margin-left: 16px;
@@ -380,7 +407,7 @@ body {
 .read-more-container {
     /* display: block;
     overflow: hidden; */
-    width: 288px;
+    /* width: 288px; */
     background-color: #F8F8F8;
     margin-left: 16px;
     /* Делаем дополнительный отступ раскрывающемуся тексту 16px */
@@ -415,14 +442,14 @@ body {
 
 /* И на его место через псевдоэлемент ::after вставляем слово "Свернуть" */
 .read-more-container[open] .read-more-trigger::after {
-    content: 'Свернуть ↓';
+    content: 'Свернуть ↑↓';
     /* Меняем стрелку на "вниз" и пишем новое слово */
     transform: none !important;
     /* Сбрасываем ховер-сдвиг, почему-то не работает */
 }
 
 .read-more-container[open] .read-more-trigger::before {
-    content: '↓';
+    content: '↓↑';
     /* Когда details открывается, добавляем (меняем) стрелочку на "вниз" перед триггером */
     transform: none;
 }
@@ -440,8 +467,10 @@ body {
 }
 
 .stand-cps {
-    /* width: 320px;
-    height: 176px; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* width: 100vw; */
+    /* height: 176px; */
     margin-top: 16px;
 }
 
@@ -458,10 +487,10 @@ body {
 }
 
 @media (min-width: 768px) {
-    body {
+    /* body {
         width: 768px;
-        /* grid-template: 88px 416px / 768px; */
-    }
+        grid-template: 88px 416px / 768px;
+    } */
 
     .header {
         display: flex;
@@ -472,9 +501,10 @@ body {
         display: block;
     }
 
-    .group {
+    /* Должен отталкивать в право соседние элементы */
+    /* .group {
         margin-right: auto;
-    }
+    } */
 
     .profile,
     .chat,
@@ -486,9 +516,9 @@ body {
         margin-right: 24px;
     }
 
-    .repair {
-        /* margin-right: 16px; */
-    }
+    /* .repair {
+        margin-right: 16px;
+    } */
 
     .nav-wrapper {
         margin-top: 32px;
@@ -496,12 +526,13 @@ body {
     }
 
     .title {
-        width: 257px;
+        /* width: 257px; */
         padding-left: 24px;
     }
 
     .content {
-        display: inline-flex;
+        /* display: inline-flex; */
+        flex-direction: row;
         font-weight: 400;
         font-size: 14px;
         line-height: 20px;
@@ -510,7 +541,7 @@ body {
 
     .preview-content-text,
     .read-more-container {
-        width: 312px;
+        /* width: 312px; */
         line-height: 20px;
         margin-top: 32px;
         margin-left: 24px;
@@ -522,6 +553,7 @@ body {
 
     .stand-cps {
         margin-top: 32px;
+        margin-right: 25px;
         margin-left: 48px;
     }
 
@@ -529,21 +561,21 @@ body {
 
 @media (min-width: 1120px) {
     body {
-        width: 1120px;
+        /* width: 1120px; */
         /* grid-template: 0 535px / 1120px; */
-        position: relative;
+        /* position: relative; */
         background: #F8F8F8;
     }
 
     .header {
-        position: relative;
+        /* position: relative; */
         background: transparent;
         padding: 0;
         height: 0;
     }
 
     .title {
-        width: 266px;
+        /* width: 266px; */
         padding-left: 33px;
         margin-top: 42px;
     }
@@ -560,47 +592,72 @@ body {
     .chat,
     .call,
     .divider-1,
-    .divider-2 {
+    .divider-2, .repair, .checkstatus {
         display: none;
     }
 
-    .repair {
-        position: absolute;
+    .wrapper-title {
         display: inline-flex;
-        margin-top: 42px;
-        margin-left: 849px;
+        align-items: baseline;
+        justify-content: space-between;
+        width: 100%;
     }
 
-    .repair::before {
-        content: 'Оставить заявку';
-        position: absolute;
-        /* Вырываем из потока верстки. ТЕКСТ: Делаем его "призраком", который не толкает кнопку */
-        /* display: inline-block; */
-        right: 100%;
-        /* ЕСЛИ ТЕКСТ ДОЛЖЕН БЫТЬ СЛЕВА ОТ КНОПКИ: Встает ровно у левой границы кнопки */
-        margin-right: 8px;
-        /* Зазор между текстом и кнопкой. Или можно добавить в свойство right: 125%; значение и убрать margin-right: 8px; - тоже будет зазор */
+    .wrapper-title label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0 10px;
         flex-shrink: 0;
-        white-space: nowrap;
-        width: 125px;
+        /* width: 168px; */
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
         letter-spacing: -0.2px;
     }
 
-    .checkstatus {
+    .pc-buttons {
+        display: inline-flex;
+        margin-right: 31px;
+        gap: 0 32px;
+    }
+
+    /* .repair {
+        position: absolute;
+        display: inline-flex;
+        margin-top: 42px;
+        margin-left: 849px;
+    } */
+
+    /* .repair::before {
+        content: 'Оставить заявку';
+        position: absolute;
+        /* Вырываем из потока верстки. ТЕКСТ: Делаем его "призраком", который не толкает кнопку */
+        /* display: inline-block; */
+        /* right: 100%; */
+        /* ЕСЛИ ТЕКСТ ДОЛЖЕН БЫТЬ СЛЕВА ОТ КНОПКИ: Встает ровно у левой границы кнопки */
+        /* margin-right: 8px; */
+        /* Зазор между текстом и кнопкой. Или можно добавить в свойство right: 125%; значение и убрать margin-right: 8px; - тоже будет зазор */
+        /* flex-shrink: 0;
+        white-space: nowrap;
+        width: 125px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.2px;
+    } */
+
+    /* .checkstatus {
         position: absolute;
         display: inline-flex;
         margin-top: 42px;
         margin-left: 1049px;
-    }
+    } */
 
-    .checkstatus::before {
+    /* .checkstatus::before {
         content: 'Статус ремонта';
         position: absolute;
         /* display: inline-block; */
-        right: 100%;
+        /* right: 100%;
         margin-right: 9px;
         flex-shrink: 0;
         white-space: nowrap;
@@ -609,14 +666,14 @@ body {
         font-size: 16px;
         line-height: 24px;
         letter-spacing: -0.2px;
-    }
+    } */
 
     .nav-wrapper {
         position: relative;
         /* align-items: center;
         justify-content: stretch; */
         overflow: visible; /* Отменяем скрытие. text-overflow и overflow больше ничего не прячут. overflow: visible; — сообщает браузеру: «Больше не нужно прятать контент, который вылезает за границы. Покажи его полностью». */
-        width: 1063px;
+        /* width: 1063px; */
         height: 82px;
         margin-top: 8px;
         margin-left: 33px;
@@ -649,13 +706,13 @@ body {
 
     }
 
-    .content-block {
+    /* .content-block {
         width: 514px;
-    }
+    } */
 
     .preview-content-text,
     .read-more-container {
-        width: 490px;
+        /* width: 490px; */
         /* line-height: 20px; */
         margin-top: 16.22px;
         margin-left: 24px;
@@ -668,6 +725,7 @@ body {
     .stand-cps {
 
         margin-top: 7px;
+        margin-right: 27.65px;
         margin-left: 36px;
         /* width: 532;
         height: 307; */
